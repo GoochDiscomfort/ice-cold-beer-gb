@@ -5,13 +5,35 @@
 #include "bar.h"
 
 
-int bar_x_pos = 0;
-int bar_y_pos = 0;
+int bar_x_pos = 20;
+int bar_y_pos = 140;
 
 int ball_x_pos = 75;
-int ball_y_pos = 144;
+int ball_y_pos = 137;
 
 int speed = 1;
+
+void draw_bar(int x_pos,int y_pos){
+    set_sprite_data(0, 8, bar);
+    set_sprite_tile(0,0);
+    move_sprite(0, x_pos, y_pos);
+        
+    set_sprite_tile(1, 1);
+    move_sprite(1, x_pos+8,y_pos);
+    set_sprite_tile(2, 1);
+    move_sprite(2, x_pos+16,y_pos);
+    set_sprite_tile(3, 1);
+    move_sprite(3, x_pos+24,y_pos);
+    set_sprite_tile(4, 1);
+    move_sprite(4, x_pos+32,y_pos);
+    set_sprite_tile(5, 1);
+    move_sprite(5, x_pos+40,y_pos);
+    set_sprite_tile(6, 1);
+    move_sprite(6, x_pos+48,y_pos);
+    set_sprite_tile(7, 2);
+    move_sprite(7, x_pos+56,y_pos);
+}
+
 
 void main()
 {
@@ -27,37 +49,24 @@ void main()
             ball_x_pos -= speed;
         }
         if (joy_direction & J_UP){
+            bar_y_pos -= speed;
             ball_y_pos -= speed;
         }
         if (joy_direction & J_DOWN){
+            bar_y_pos += speed;
             ball_y_pos += speed;
         }
 
         if (ball_y_pos > 144){ball_y_pos = 144;}
-        if (ball_y_pos < 16){ball_y_pos = 16;}
-        if (ball_x_pos > 74){ball_x_pos = 74;}
-        if (ball_x_pos < 29){ball_x_pos = 29;}
+        if (ball_y_pos < bar_y_pos){ball_y_pos = bar_y_pos- 3;}
+        if (ball_x_pos > 73){ball_x_pos = 73;}
+        if (ball_x_pos < 23){ball_x_pos = 23;}
+
+        if (bar_y_pos > 140){bar_y_pos = 140;}
 
         // Bar Sprite
         SPRITES_8x8;
-        set_sprite_data(0, 8, bar);
-        set_sprite_tile(0,0);
-        move_sprite(0, 20, 140);
-        
-        set_sprite_tile(1, 1);
-        move_sprite(1, 28,140);
-        set_sprite_tile(2, 1);
-        move_sprite(2, 36,140);
-        set_sprite_tile(3, 1);
-        move_sprite(3, 44,140);
-        set_sprite_tile(4, 1);
-        move_sprite(4, 52,140);
-        set_sprite_tile(5, 1);
-        move_sprite(5, 60,140);
-        set_sprite_tile(6, 1);
-        move_sprite(6, 68,140);
-        set_sprite_tile(7, 2);
-        move_sprite(7, 76,140);
+        draw_bar(bar_x_pos, bar_y_pos);
 
         // Initialize Ball Sprite
         
